@@ -1,0 +1,59 @@
+/*
+ Question:
+ Given a string s containing only the characters
+ '(', ')', '{', '}', '[' and ']',
+ determine if the input string is valid.
+
+ Example:
+ Input: "()[]{}"
+ Output: true
+
+ Input: "(]"
+ Output: false
+*/
+
+class ValidParentheses {
+
+    // Function to check valid parentheses
+    public static boolean isValid(String s) {
+
+        char[] stack = new char[s.length()]; // array as stack
+        int top = -1; // stack pointer
+
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+
+            // If opening bracket, push to stack
+            if (ch == '(' || ch == '{' || ch == '[') {
+                stack[++top] = ch;
+            }
+            // If closing bracket
+            else {
+                // If stack is empty, invalid
+                if (top == -1) {
+                    return false;
+                }
+
+                char open = stack[top--];
+
+                // Check matching pair
+                if (ch == ')' && open != '(') return false;
+                if (ch == '}' && open != '{') return false;
+                if (ch == ']' && open != '[') return false;
+            }
+        }
+
+        // If stack is empty, valid
+        return top == -1;
+    }
+
+    // Main method
+    public static void main(String[] args) {
+
+        String s = "()[]{}";
+
+        boolean result = isValid(s);
+
+        System.out.println("Valid Parentheses: " + result);
+    }
+}
